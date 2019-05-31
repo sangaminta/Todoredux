@@ -14,6 +14,9 @@ const initialState = {
         case actionType.SUB_TODO:
         return Object.assign({}, state,{inputValue:'',todolist:[...state.todolist,action.payload]})
 
+        case actionType.CHECK_TODO:
+        return Object.assign({},state,{todolist:action.payload})
+
         default:
         return state;
     }

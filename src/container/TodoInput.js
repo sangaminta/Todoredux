@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { connect } from 'react-redux';
-import {addTodo,subTodo} from "../container/action/Action_Fun";
+import {addTodo,subTodo,check} from "../container/action/Action_Fun";
 
 class TodoInput extends Component {
 
@@ -19,6 +19,13 @@ class TodoInput extends Component {
         }
 
         this.props.actionForSubmit(data);
+    }
+    handlerCheck = index =>
+    {
+        const itemss = [...this.props.todolist]
+        console.log("index",itemss)
+        itemss[index].checked = !itemss[index].checked
+        this.props.actiononcheckbox(itemss)
     }
     
     render() {
@@ -41,8 +48,12 @@ class TodoInput extends Component {
                             return(
                                 item.todo===''?alert('Todo name Can not be blank '):
                                 <div className = 'form-control text-capitalize my-2' key ={index}>
-                                 <span><input type ="checkbox"  /> </span>
+                                 <span><input type ="checkbox" onClick ={()=>this.handlerCheck(index)} /> </span>
                                  <span className ='mx-2'> {item.todo} </span>
+                                 <span className = 'mx-2 text-success float-right'>
+                                     <i className ={item.checked?'fas fa-pen':''}  />
+                                 </span>
+                                 <span className ={item.checked?'.col bg-dark rounded text-white float-right':""}>{item.checked? 'complete':''}</span>                          
                                 </div>
                             );
                         })}      
@@ -62,7 +73,8 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch)=> {
     return {
       actionForAddTodo:(todo_title)=>dispatch(addTodo(todo_title)),
-      actionForSubmit:(todo_submit)=>dispatch(subTodo(todo_submit))
+      actionForSubmit:(todo_submit)=>dispatch(subTodo(todo_submit)),
+      actiononcheckbox:(todo_check)=>dispatch(check(todo_check))
         }
 }
 
