@@ -24,8 +24,11 @@ export function edit_input(payload){
     return{type:actionType.EDIT_TODO_INPUT,payload}
 }
 
-export function edit_submit(payload) {
-    
+export function edit_submit(payload) { 
     return{type:actionType.EDIT_TODO_SUBMIT,payload}
+}  
+
+export function delete_todo(payload) {
+    return{type:actionType.DELETE_TODO,payload}
 }
 

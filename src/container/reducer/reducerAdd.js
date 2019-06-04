@@ -30,12 +30,15 @@ const initialState = {
         let x=cloneDeep(state)
         x.todolist[action.payload.index].inputEdit = action.payload.todoEdit;
         return x
+
         case actionType.EDIT_TODO_SUBMIT:
-        
         return Object.assign({},state,{todolist:action.payload})
-       
+
+        case actionType.DELETE_TODO:
+        return Object.assign({},state,{todolist:action.payload.filterItems})
         default:
         return state;
+
     }
 }
 

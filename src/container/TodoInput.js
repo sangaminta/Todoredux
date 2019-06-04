@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { connect } from 'react-redux';
-import {addTodo,subTodo,check,edit,edit_text,edit_input,edit_submit} from "../container/action/Action_Fun";
+import {addTodo,subTodo,check,edit,edit_text,edit_input,edit_submit,delete_todo} from "../container/action/Action_Fun";
 
 class TodoInput extends Component {
 
@@ -64,6 +64,10 @@ class TodoInput extends Component {
         filterItems.push(data);        
         this.props.actionForEditSubmit(filterItems);
     }
+    handlerdeleteTodo = item => {
+        const filterItems = this.props.todolist.filter(todo => todo.id !== item.id)
+        this.props.actionForDelete({filterItems});
+    }
     
     render() { 
         
@@ -100,6 +104,7 @@ class TodoInput extends Component {
                                     </span>
                                     <span className = 'mx-2 text-success float-right'>
                                         <i className ={item.checked?'fas fa-pen':''} onClick ={()=>this.handlerEdit(item)} />
+                                        <button type="button" className="btn btn-danger" id='edit' onClick={()=>this.handlerdeleteTodo(item)}>Delete</button>
                                     </span>
                                     <span className ={item.checked?'.col bg-dark rounded text-white float-right':""}>{item.checked? 'complete':''}</span>                          
                                 </div>
@@ -126,7 +131,8 @@ const mapDispatchToProps = (dispatch)=> {
       actionForEdit:(todo_edit)=>dispatch(edit(todo_edit)),
       actionForEditTodo:(todo_edit_text)=>dispatch(edit_text(todo_edit_text)),
       actionForInputEdit:(todo_Input_Edit) => dispatch(edit_input(todo_Input_Edit)),
-      actionForEditSubmit:(todo_Input_Sub) => dispatch(edit_submit(todo_Input_Sub))
+      actionForEditSubmit:(todo_Input_Sub) => dispatch(edit_submit(todo_Input_Sub)),
+      actionForDelete:(delete_todo_item) => dispatch(delete_todo(delete_todo_item))
 
     }
 }
